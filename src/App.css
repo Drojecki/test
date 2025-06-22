@@ -12,10 +12,12 @@ html, body {
 body {
   position: relative;
   color: white;
+  font-weight: 274;
   margin: 0;
   height: 100vh;
   overflow: hidden;
   z-index: 0;
+  font-family: 'Montserrat', sans-serif;
 }
 
 body::before {
@@ -43,16 +45,21 @@ body::before {
   position: relative;
 }
 .App-header{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
 }
 .header{
  background-color: aliceblue;
-  opacity: 1;
+  /* opacity: 1; */
   display: flex;
   gap: 50px;
   justify-content: right;
   overflow: hidden;
   max-height: 200px;
   padding: 0px 50px;
+  opacity: 0.8;
   transition: max-height 0.5s ease, opacity 0.5s ease;
   @media (max-width:991px) {
     gap: 10px;
@@ -72,10 +79,10 @@ body::before {
 a{
   text-decoration: none;
   color: #000;
-  margin: 10px 0px;
+  margin: 20px 0px;
   transition: all 0.5s;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 14px;
   @media (max-width:991px) {
     padding: 5px;
     font-size: 12px;
@@ -87,8 +94,7 @@ a:hover{
 }
 
 .hejkanaklejka{
-  margin-top: 5vh;
-  padding: 0px 30px;
+  margin-top: 4vh;
   /* background-color: red; */
 }
 
@@ -108,10 +114,12 @@ a:hover{
 }
 .projekty {
   /* background-color: blue; */
-  margin-top: 50px;
+  position: relative;
+  margin-top: 10px;
+  padding-top: 40px;
   height: 100%; 
   overflow-y: auto;         
-  opacity: 0.8;
+  opacity: 1;
   scrollbar-width: none;
   -ms-overflow-style: none; 
    
@@ -158,33 +166,92 @@ a:hover{
 
 .projekt-text{
   position: absolute;
+  font-size: 16px;
   top: 10px;
+  margin: 5px;
+  font-weight: 274s;
   left: 50%;
   transform: translateX(-50%);
+  text-transform: uppercase;
   z-index: 10;
 }
 .img-projekt {
+  position: relative;
   width: 80%;
   margin: 0 auto;
   aspect-ratio: 16/9;
-  background-image: url('/public/tlo.jpg');
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.img-projekt::before,
+.img-projekt::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background-size: cover;
   background-position: center;
+  transition: opacity 1s;
   border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  transition: all 1s;
-  z-index: 2;
-   @media (max-width:991px) {
-    margin-bottom: 30px;
-  }
 }
 
+.img-projekt::before {
+  background-image: url('/public/tlo.jpg');
+  z-index: 1;
+  opacity: 1;
+}
 
-.img-projekt:hover{
-  filter: brightness(0.8);
-  cursor: pointer;
+.img-projekt::after {
   background-image: url('/public/Image13.png');
-  border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  z-index: 2;
+  opacity: 0;
 }
+
+.img-projekt:hover::after {
+  opacity: 1;
+}
+.img-projekt:hover{
+  cursor: pointer;
+}
+
+.scroll-arrow {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: auto;
+  z-index: 20;
+  animation: arrowBounce 1s infinite ease-in-out;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+@keyframes arrowBounce {
+  0% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+.header a.active {
+  font-weight: 400;
+}
+.testest{
+  position: relative;
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+
+
+
+
+
+
+
 
