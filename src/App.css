@@ -1,0 +1,190 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  position: relative;
+  color: white;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/public/tlo.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.6;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.app{
+  position: relative;
+}
+.App-header{
+}
+.header{
+ background-color: aliceblue;
+  opacity: 1;
+  display: flex;
+  gap: 50px;
+  justify-content: right;
+  overflow: hidden;
+  max-height: 200px;
+  padding: 0px 50px;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  @media (max-width:991px) {
+    gap: 10px;
+    padding: 0px 10px;
+  }
+}
+
+.schowany {
+  opacity: 0;
+  max-height: 0;
+}
+.textpod{
+  margin: 0px;
+  font-size: 12px;
+}
+
+a{
+  text-decoration: none;
+  color: #000;
+  margin: 10px 0px;
+  transition: all 0.5s;
+  text-transform: uppercase;
+  font-size: 12px;
+  @media (max-width:991px) {
+    padding: 5px;
+    font-size: 12px;
+  }
+}
+a:hover{
+  cursor: pointer;
+  color: #7c7c7c;
+}
+
+.hejkanaklejka{
+  margin-top: 5vh;
+  padding: 0px 30px;
+  /* background-color: red; */
+}
+
+.duzynapis{
+  font-size: 50px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  @media (max-width:991px) {
+    font-size: 30px;
+  }
+}
+.imie{
+  margin: 0;
+  margin-top: 10px;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+.projekty {
+  /* background-color: blue; */
+  margin-top: 50px;
+  height: 100%; 
+  overflow-y: auto;         
+  opacity: 0.8;
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+   
+}
+
+.projekty::-webkit-scrollbar {
+  display: none;
+}
+
+.projekty > div {
+  height: auto; 
+}
+
+.margin{
+  margin-top: 10px;
+}
+
+.col-12 {
+  width: 100%;
+  box-sizing: border-box;
+  height: fit-content;
+}
+
+@media (min-width: 992px) {
+  .col-lg-6 {
+    width: 50%;
+    box-sizing: border-box;
+  }
+}
+
+.didplayflex{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  @media (max-width:991px) {
+    display: block;
+  }
+}
+
+.projekt{
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.projekt-text{
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+.img-projekt {
+  width: 80%;
+  margin: 0 auto;
+  aspect-ratio: 16/9;
+  background-image: url('/public/tlo.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: all 1s;
+  z-index: 2;
+   @media (max-width:991px) {
+    margin-bottom: 30px;
+  }
+}
+
+
+.img-projekt:hover{
+  filter: brightness(0.8);
+  cursor: pointer;
+  background-image: url('/public/Image13.png');
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
