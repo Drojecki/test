@@ -46,6 +46,36 @@ function App() {
             <div className="img-projekt"></div>
           </div>
       </div>
+      <div className="didplayflex">
+          <div className="col-12 col-lg-6 projekt">
+            <p className="projekt-text">Projekt test</p>
+            <div className="img-projekt"></div>
+          </div>
+          <div className="col-12 col-lg-6 projekt">
+            <p className="projekt-text">Projekt test</p>
+            <div className="img-projekt"></div>
+          </div>
+      </div>
+      <div className="didplayflex">
+          <div className="col-12 col-lg-6 projekt">
+            <p className="projekt-text">Projekt test</p>
+            <div className="img-projekt"></div>
+          </div>
+          <div className="col-12 col-lg-6 projekt">
+            <p className="projekt-text">Projekt test</p>
+            <div className="img-projekt"></div>
+          </div>
+      </div>
+      <div className="didplayflex">
+          <div className="col-12 col-lg-6 projekt">
+            <p className="projekt-text">Projekt test</p>
+            <div className="img-projekt"></div>
+          </div>
+          <div className="col-12 col-lg-6 projekt">
+            <p className="projekt-text">Projekt test</p>
+            <div className="img-projekt"></div>
+          </div>
+      </div>
       </section>
     </div>
   );
