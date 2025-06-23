@@ -2,9 +2,11 @@ html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
+  @media (max-width:991px) {
+    height: 100dvh;
+  }
 }
 html, body {
-  height: 100%;
   margin: 0;
   overflow: hidden;
 }
@@ -51,16 +53,16 @@ body::before {
     width: 100%;
 }
 .header{
- background-color: aliceblue;
-  /* opacity: 1; */
+  background-color: rgba(240, 248, 255, 0.8);
   display: flex;
   gap: 50px;
   justify-content: right;
   overflow: hidden;
   max-height: 200px;
   padding: 0px 50px;
-  opacity: 0.8;
+  /* opacity: 0.8; */
   transition: max-height 0.5s ease, opacity 0.5s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   @media (max-width:991px) {
     gap: 10px;
     padding: 0px 10px;
@@ -73,7 +75,7 @@ body::before {
 }
 .textpod{
   margin: 0px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 a{
@@ -82,15 +84,31 @@ a{
   margin: 20px 0px;
   transition: all 0.5s;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 16px;
   @media (max-width:991px) {
     padding: 5px;
-    font-size: 12px;
+    font-size: 14px;
   }
 }
-a:hover{
-  cursor: pointer;
+a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 2px;
+  background-color: #7c7c7c;
+  transition: width 0.3s ease;
+}
+
+a:hover {
   color: #7c7c7c;
+  cursor: pointer;
+  transform: translateY(-2px);
+}
+
+a:hover::after {
+  width: 100%;
 }
 
 .hejkanaklejka{
@@ -150,6 +168,7 @@ a:hover{
   .col-lg-6 {
     width: 50%;
     box-sizing: border-box;
+    width: calc(50% - 80px);
   }
 }
 
@@ -157,14 +176,34 @@ a:hover{
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  place-content: center;
+  @media (min-width: 992px) {
+    gap: 60px;
+  }
   @media (max-width:991px) {
     display: block;
+    width: 90%;
+    margin: auto;
   }
+}
+
+.img-projekt {
+  position: relative;
+  /* width: 80%; */
+  margin: 0 auto;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  cursor: pointer;
 }
 
 .projekt{
   position: relative;
   margin-bottom: 50px;
+}
+.didplayflex:last-of-type .projekt:last-of-type {
+  margin-bottom: 100px;
 }
 
 .projekt-text{
@@ -178,59 +217,58 @@ a:hover{
   text-transform: uppercase;
   z-index: 10;
 }
-.img-projekt {
-  position: relative;
-  width: 80%;
-  margin: 0 auto;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
 
-.img-projekt::before,
-.img-projekt::after {
+
+.img-layer {
   content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
   transition: opacity 1s;
   border-radius: 8px;
 }
 
-.img-projekt::before {
-  background-image: url('/public/tlo.jpg');
+.layer-1 {
   z-index: 1;
   opacity: 1;
 }
 
-.img-projekt::after {
-  background-image: url('/public/Image13.png');
+.layer-2 {
   z-index: 2;
   opacity: 0;
 }
 
-.img-projekt:hover::after {
+.img-projekt:hover .layer-2 {
   opacity: 1;
 }
+
 .img-projekt:hover{
-  cursor: pointer;
+  box-shadow: 0px 0px 2px 3px rgba(255, 255, 255, 0.4);
+  transition: box-shadow 0.5s ease;
 }
+
 
 .scroll-arrow {
   position: absolute;
-  bottom: 20px;
+  bottom: 20%;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
+  transform: translateY(-20%);
+  width: 60px;
   height: auto;
   z-index: 20;
   animation: arrowBounce 1s infinite ease-in-out;
   pointer-events: none;
   opacity: 1;
   transition: opacity 0.5s ease;
+  @media (max-width:991px) {
+    bottom: 30%;
+    transform: translateY(-30%);
+  }
 }
 
 @keyframes arrowBounce {
@@ -240,15 +278,168 @@ a:hover{
 }
 
 .header a.active {
-  font-weight: 400;
+  font-weight: 500;
 }
 .testest{
   position: relative;
-    width: 80%;
-    margin: 0 auto;
-    overflow: hidden;
-    border-radius: 8px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 8px;
+  width: 90%;
+  @media (min-width:992px) {
+    margin-left: 50px;
+    width: 100%;
+  }
 }
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  z-index: 9999;
+  padding: 40px 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.buttonX {
+  background-color: none;
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  font-weight: 600;
+  font-size: 24px;
+  color: white;
+  pointer-events: auto;
+  user-select: none;
+  z-index: 10000;
+  background-color: transparent;
+  border: none;
+  @media (max-width:991px) {
+    top: 7px;
+    right: 7px;
+  }
+}
+
+.buttonX:hover { 
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.5s ease;
+}
+
+.modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 1;
+  transform: translateY(0);
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
+   
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.modal-content img {
+  max-width: 100%;
+  /* border-radius: 8px; */
+}
+
+@media (max-width: 991px) {
+  .modal-overlay {
+    padding: 20px 5px;
+  }
+  .modal-content {
+    max-width: 99vw;
+    gap: 5px;
+  }
+}
+
+.arrow-icon {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  transform: translateY(-5%);
+  width: 60px;
+  animation: bounce 1.5s infinite;
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  animation: bounce 1.5s infinite;
+}
+
+.arrow-icon.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@keyframes bounce {
+    0% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(10px); }
+    100% { transform: translateX(-50%) translateY(0); }
+}
+
+.duzynapis,
+.imie,
+.textpod {
+  text-shadow: 5px 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease;
+}
+
+.preloader-logo {
+  position: static;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  transform: translateX(-50%);
+  width: 200px;
+  height: auto;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+
 
 
 

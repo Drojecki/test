@@ -1,55 +1,50 @@
+import { useEffect, useRef  , useState} from 'react';
+import { Link } from 'react-router-dom';
 
+export default function Header({ scrollContainer }) {
+  const headerRef = useRef(null);
+  const scrollListenerRef = useRef(null);
 
-function header() {
-    const header = document.getElementById('test');
-    const projekt = document.getElementsByClassName('projekty')[0];
-    let lastScrollTop = 0;
-    let hoverMyszka = true;
+  useEffect(() => {
+    const header = headerRef.current;
+    const container = scrollContainer?.current;
+
+    if (!header || !container) return;
+
     const pełnaWysokość = header.scrollHeight;
-    const arrow = document.createElement('img');
-    arrow.src = '/arrow.png';
-    arrow.alt = 'Scrolluj w dół';
-    arrow.classList.add('scroll-arrow');
-    projekt.appendChild(arrow);
-
     header.style.maxHeight = `${pełnaWysokość}px`;
 
-    projekt.addEventListener('scroll', () => {
-        hoverMyszka = false;
-        const currentScrollTop = projekt.scrollTop;
+    let lastScrollTop = container.scrollTop;
 
-        if (currentScrollTop > lastScrollTop) {
-            header.style.maxHeight = '0';
-            header.style.opacity = '0';
-        } else if (currentScrollTop < lastScrollTop) {
-            header.style.maxHeight = `${pełnaWysokość}px`;
-            header.style.opacity = '0.8';
-        }
+    const onScroll = () => {
+      const currentScrollTop = container.scrollTop;
+      if (currentScrollTop > lastScrollTop) {
+        header.style.maxHeight = '0';
+        header.style.opacity = '0';
+      } else if (currentScrollTop < lastScrollTop) {
+        header.style.maxHeight = `${pełnaWysokość}px`;
+        header.style.opacity = '1';
+      }
 
-        lastScrollTop = currentScrollTop;
+      lastScrollTop = currentScrollTop;
+    };
 
-        if (!hoverMyszka && arrow.parentElement) {
-            arrow.style.opacity = '0';
-            setTimeout(() => {
-                if (arrow.parentElement) {
-                    arrow.remove();
-                }
-            }, 500);
-        }
-    });
+    container.addEventListener('scroll', onScroll);
+    scrollListenerRef.current = onScroll;
 
+    return () => {
+      container.removeEventListener('scroll', onScroll);
+    };
+  }, [scrollContainer?.current]);
 
-    const links = header.querySelectorAll('a');
-    const currentPath = window.location.pathname;
-
-    links.forEach(link => {
-        const linkPath = new URL(link.href).pathname;
-        if (linkPath === currentPath) {
-        link.classList.add('active');
-        } else {
-        link.classList.remove('active');
-        }
-    });
+  return (
+    <header className="App-header">
+      <div className="header" ref={headerRef}>
+        <Link to="/">Projekty</Link>
+        <Link to="/o-mnie">o mnie</Link>
+        <Link to="/cv">CV</Link>
+        <Link to="/kontakt" className="text-header">Kontakt</Link>
+      </div>
+    </header>
+  );
 }
-
-export default header;

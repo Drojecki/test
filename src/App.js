@@ -1,89 +1,81 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import Projekty from './components/Projekty';
+import OMnie from './components/OMnie';
+import CV from './components/CV';
+import Kontakt from './components/Kontakt';
+import Header from './scripts/header';
 import './App.css';
-import header from './scripts/header.js';
 
-function App() {
+function AppContent() {
+  const projektyRef = useRef(null);
+  const location = useLocation();
+
+  const [loading, setLoading] = useState(true);
+  const hasLoadedOnce = useRef(false);
+
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
-    header();
-  }, []);
+    if (!hasLoadedOnce.current) {
+      setLoading(true);
+      const timer = setTimeout(() => {
+        setLoading(false);
+        hasLoadedOnce.current = true;
+      }, 1500);
+      return () => {
+        clearTimeout(timer);
+      };
+    } else {
+      setLoading(false);
+    }
+  }, [location.pathname]);
+
+  const handleImagesLoaded = () => setImagesLoaded(true);
 
   return (
-    <div className="App">
-      <header  className="App-header">
-        <div id="test" className="header">
-          <a href="/">Projekty</a>
-          <a href="/test">o mnie</a>
-          <a href="/test">CV</a>
-          <a href="/test" className="text-header">Kontakt</a>
-        </div>
-      </header>
-      <section className="hejkanaklejka">
-        <div className='col-12 col-lg-6 '>
-          <div className='testest'>
-             <h1 className="duzynapis">PORTFOLIO</h1>
-            <p className="imie">Emilia Czopik</p>
-            <p className="textpod">Projektuję przestrzenie, które zostają na dłużej.</p>
-            <p className="textpod">Zarówno wewnątrz, jak i na zewnątrz.</p>
-            <p className="textpod margin">Architektura • Wnętrza • Przestrzeń publiczna</p>
-          </div>
-        </div>
-        
-      </section>
-      <section className="projekty">
-       <div className="didplayflex">
-          <div className="col-12 col-lg-6 projekt">
-            <p className="projekt-text">Projekt test</p>
-            <div className="img-projekt"></div>
-          </div>
-          <div className="col-12 col-lg-6 projekt">
-            <p className="projekt-text">Projekt test</p>
-            <div className="img-projekt"></div>
-          </div>
+    <>
+      <div
+        id="preloader"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: '#fff',
+          display: 'flex',
+          justifyContent: 'center',
+          transition: 'opacity 1s ease',
+          alignItems: 'center',
+          zIndex: 9999,
+          opacity: loading ? 1 : 0,
+          pointerEvents: loading ? '' : 'none',
+        }}
+      >
+        <img src="/LOGO_3.png" alt="Ładowanie..." className="preloader-logo" />
       </div>
-      <div className="didplayflex">
-          <div className="col-12 col-lg-6 projekt">
-            <p className="projekt-text">Projekt test</p>
-            <div className="img-projekt"></div>
-          </div>
-          <div className="col-12 col-lg-6 projekt">
-            <p className="projekt-text">Projekt test</p>
-            <div className="img-projekt"></div>
-          </div>
+
+      <div className={`App ${loading ? 'blurred' : ''}`} style={{ filter: loading ? 'blur(2px)' : 'none' }}>
+        <Header scrollContainer={projektyRef} />
+        <main>
+          <Routes>
+            <Route path="/" element={<Projekty projektyRef={projektyRef} onImagesLoaded={handleImagesLoaded} />} />
+            <Route path="/o-mnie" element={<OMnie />} />
+            <Route path="/cv" element={<CV />} />
+            <Route path="/kontakt" element={<Kontakt />} />
+          </Routes>
+        </main>
       </div>
-      <div className="didplayflex">
-          <div className="col-12 col-lg-6 projekt">
-            <p className="projekt-text">Projekt test</p>
-            <div className="img-projekt"></div>
-          </div>
-          <div className="col-12 col-lg-6 projekt">
-            <p className="projekt-text">Projekt test</p>
-            <div className="img-projekt"></div>
-          </div>
-      </div>
-      <div className="didplayflex">
-          <div className="col-12 col-lg-6 projekt">
-            <p className="projekt-text">Projekt test</p>
-            <div className="img-projekt"></div>
-          </div>
-          <div className="col-12 col-lg-6 projekt">
-            <p className="projekt-text">Projekt test</p>
-            <div className="img-projekt"></div>
-          </div>
-      </div>
-      <div className="didplayflex">
-          <div className="col-12 col-lg-6 projekt">
-            <p className="projekt-text">Projekt test</p>
-            <div className="img-projekt"></div>
-          </div>
-          <div className="col-12 col-lg-6 projekt">
-            <p className="projekt-text">Projekt test</p>
-            <div className="img-projekt"></div>
-          </div>
-      </div>
-      </section>
-    </div>
+    </>
   );
 }
 
-export default App;
+
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
