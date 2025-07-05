@@ -14,7 +14,7 @@ function AppContent() {
   const [loading, setLoading] = useState(true);
   const hasLoadedOnce = useRef(false);
 
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+  // const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
     if (!hasLoadedOnce.current) {
@@ -31,7 +31,7 @@ function AppContent() {
     }
   }, [location.pathname]);
 
-  const handleImagesLoaded = () => setImagesLoaded(true);
+  // const handleImagesLoaded = () => setImagesLoaded(true);
 
   return (
     <>
@@ -58,9 +58,9 @@ function AppContent() {
 
       <div className={`App ${loading ? 'blurred' : ''}`} style={{ filter: loading ? 'blur(2px)' : 'none' }}>
         <Header scrollContainer={projektyRef} />
-        <main>
+        <main className={loading ? '' : 'visible'}>
           <Routes>
-            <Route path="/" element={<Projekty projektyRef={projektyRef} onImagesLoaded={handleImagesLoaded} />} />
+            <Route path="/" element={<Projekty projektyRef={projektyRef}  />} />
             <Route path="/o-mnie" element={<OMnie />} />
             <Route path="/cv" element={<CV />} />
             <Route path="/kontakt" element={<Kontakt />} />

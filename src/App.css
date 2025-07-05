@@ -6,6 +6,16 @@ html, body, #root {
     height: 100dvh;
   }
 }
+main {
+  transition: transform 1s ease, opacity 1s ease;
+  transform: translateY(-50px);
+  opacity: 0;
+}
+
+main.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
 html, body {
   margin: 0;
   overflow: hidden;
@@ -343,10 +353,33 @@ a:hover::after {
   padding: 40px 20px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.5s ease, visibility 0.5s ease, transform 1s ease;
+  
+}
+.thumb-image {
+  opacity: 0;
+  /* transform: scale(0.9); */
+  transition: opacity 0.8s ease-out, transform 0.5s ease-out;
+  will-change: opacity, transform, filter;
+}
+
+.thumb-image.visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .modal-overlay.show {
+  transform: translate(0px, 0px);
+  opacity: 1;
+  visibility: visible;
+}
+.modal-overlay .modal-content{
+  transform: translate(0px, -50px);
+  opacity: 1;
+  visibility: visible;
+}
+.modal-overlay.show .modal-content{
+  transform: translate(0px, 0px);
   opacity: 1;
   visibility: visible;
 }
@@ -366,8 +399,8 @@ a:hover::after {
   background-color: transparent;
   border: none;
   @media (max-width:991px) {
-    top: 7px;
-    right: 7px;
+    top: 27px;
+    right: 27px;
   }
 }
 
@@ -379,15 +412,18 @@ a:hover::after {
 
 .modal-content {
   background-color: white;
-  position: relative; 
+  position: fixed; 
   max-width: 90vw;
-  max-height: 90vh;
+  max-height: unset;
+  top: 10px;
+  height: calc(100dvh - 20px);
   overflow-y: auto;
   transition: transform 0.5s ease, opacity 0.5s ease;
   opacity: 1;
   transform: translateY(0);
   scrollbar-width: none;
   -ms-overflow-style: none;
+  border-radius: 8px;
 }
 .modal-content::-webkit-scrollbar {
   display: none;
@@ -432,9 +468,6 @@ a:hover::after {
   width: 100%;
   height: auto;
   display: block;
-  @media (max-width:991px) {
-    /* border-radius: 0px; */
-  }
 }
 
 .modal-description {
@@ -477,8 +510,10 @@ a:hover::after {
     padding: 20px 5px;
   }
   .modal-content {
-    max-width: 99vw;
-    gap: 5px;
+    max-width: unset;
+    width: calc(100vw - 20px);
+    top: 10px;
+    height: calc(100dvh - 70px);
   }
 }
 
@@ -552,6 +587,15 @@ a:hover::after {
     opacity: 0.7;
   }
 }
+
+.projektHeader{
+  color: black;
+  text-align: center;
+  font-weight: 300;
+  text-transform: capitalize;
+  margin: 10px;
+}
+
 
 
 

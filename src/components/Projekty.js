@@ -1,5 +1,6 @@
 import ProjectElement from '../projektElement/projektElement.js';
 import { useEffect, useRef, useState } from 'react';
+import LazyThumbImage from '../components/LazyThumbImage';
 
 export default function Projekty({ projektyRef , onImagesLoaded }) {
   const [modalId, setModalId] = useState(null);
@@ -9,6 +10,19 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
   const [loadedImages, setLoadedImages] = useState(0);
   const totalImages = 10;
   const modalContentRef = useRef(null);
+  const projectNames = {
+    "1": "Słubice Swimscape",
+    "2": "Brzegi Gniezna",
+    "3": "Plac Berwińskiego",
+    "4": "Micro Living",
+    "5": "Skwer Miejski",
+    "6": "Architektura Piwa",
+    "7": "Nowy Rytm Jarocina",
+    "8": "Dom z widokiem",
+    "9": "Wolność i Stal",
+    "10": "Krąg Dziecka"
+  };
+
 
   const [description, setDescription] = useState('');
   useEffect(() => {
@@ -110,70 +124,70 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
       </section>
 
       <div
-  className={`modal-overlay ${modalId ? 'show' : ''}`}
-  onClick={() => setModalId(null)}
-  style={{ pointerEvents: modalId ? 'auto' : 'none' }}
->
-  <div
-    className="modal-content"
-    ref={modalContentRef}
-    onClick={e => e.stopPropagation()}
-    style={{ overflowY: 'auto', maxHeight: '90vh' }}
-  >
-   
-    <img
-      src="/arrow.png"
-      alt="Scroll down"
-      className="arrow-icon"
-      style={{ opacity: !hasScrolledModal && isOverflowingModal ? 1 : 0 }}
-    />
-
-    {modalId && (
-      <div className="modal-hero">
-        <div className='divimgtest'>
+        className={`modal-overlay ${modalId ? 'show' : ''}`}
+        onClick={() => setModalId(null)}
+        style={{ pointerEvents: modalId ? 'auto' : 'none' }}
+      >
+        <div
+          className="modal-content"
+          ref={modalContentRef}
+          onClick={e => e.stopPropagation()}
+          style={{ overflowY: 'auto'}}
+        >
+        
           <img
-            src={`/${modalId}/1.png`}
-            alt={`Projekt ${modalId} – obraz 1`}
-            onLoad={() => setLoadedImages(prev => prev + 1)}
-            onError={e => {
-              e.target.style.display = 'none';
-              setLoadedImages(prev => prev + 1);
-            }}
+            src="/arrow.png"
+            alt="Scroll down"
+            className="arrow-icon"
+            style={{ opacity: !hasScrolledModal && isOverflowingModal ? 1 : 0 }}
           />
+
+          {modalId && (
+            <div className="modal-hero">
+              <h1 className='projektHeader'>{projectNames[modalId]}</h1>
+              <div className='divimgtest'>
+                <LazyThumbImage
+                  src={`/${modalId}/1.png`}
+                  alt={`Projekt ${modalId} – obraz 1`}
+                  onLoad={() => setLoadedImages(prev => prev + 1)}
+                  onError={e => {
+                    e.target.style.display = 'none';
+                    setLoadedImages(prev => prev + 1);
+                  }}
+                />
+              </div>
+              {description && (
+                <div className="modal-description">
+                  {description.split('\n').map((line, idx) => (
+                    <p key={idx}>{line}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {modalId && totalImages > 1 && (
+            <div className="modal-thumbs">
+              {[...Array(totalImages - 1)].map((_, i) => (
+              <LazyThumbImage
+                  key={i + 2}
+                  src={`/${modalId}/${i + 2}.png`}
+                  alt={`Projekt ${modalId} – obraz ${i + 2}`}
+                  onLoad={() => setLoadedImages(prev => prev + 1)}
+                  onError={e => {
+                    e.target.style.display = 'none';
+                    setLoadedImages(prev => prev + 1);
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
-        {description && (
-          <div className="modal-description">
-            {description.split('\n').map((line, idx) => (
-              <p key={idx}>{line}</p>
-            ))}
-          </div>
-        )}
+
+        <button className="buttonX" onClick={() => setModalId(null)}>
+          X
+        </button>
       </div>
-    )}
-
-    {modalId && totalImages > 1 && (
-      <div className="modal-thumbs">
-        {[...Array(totalImages - 1)].map((_, i) => (
-          <img
-            key={i + 2}
-            src={`/${modalId}/${i + 2}.png`}
-            alt={`Projekt ${modalId} – obraz ${i + 2}`}
-            onLoad={() => setLoadedImages(prev => prev + 1)}
-            onError={e => {
-              e.target.style.display = 'none';
-              setLoadedImages(prev => prev + 1);
-            }}
-          />
-        ))}
-      </div>
-    )}
-  </div>
-
-  <button className="buttonX" onClick={() => setModalId(null)}>
-    X
-  </button>
-</div>
-
     </>
   );
 }
