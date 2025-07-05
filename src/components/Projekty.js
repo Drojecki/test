@@ -92,7 +92,7 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
           <ProjectElement id="2" name="Brzegi Gniezna" onClick={setModalId} />
         </div>
         <div className="didplayflex">
-          <ProjectElement id="3" name="Wokół Pomnika" onClick={setModalId} />
+          <ProjectElement id="3" name="Plac Berwińskiego" onClick={setModalId} />
           <ProjectElement id="4" name="Micro Living" onClick={setModalId} />
         </div>
         <div className="didplayflex">
@@ -120,7 +120,7 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
     onClick={e => e.stopPropagation()}
     style={{ overflowY: 'auto', maxHeight: '90vh' }}
   >
-    {/* strzałka */}
+   
     <img
       src="/arrow.png"
       alt="Scroll down"
@@ -128,19 +128,19 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
       style={{ opacity: !hasScrolledModal && isOverflowingModal ? 1 : 0 }}
     />
 
-    {/* ---------- HERO (pierwszy obraz) ---------- */}
     {modalId && (
       <div className="modal-hero">
-        <img
-          src={`/${modalId}/1.png`}
-          alt={`Projekt ${modalId} – obraz 1`}
-          onLoad={() => setLoadedImages(prev => prev + 1)}
-          onError={e => {
-            e.target.style.display = 'none';
-            setLoadedImages(prev => prev + 1);
-          }}
-        />
-
+        <div className='divimgtest'>
+          <img
+            src={`/${modalId}/1.png`}
+            alt={`Projekt ${modalId} – obraz 1`}
+            onLoad={() => setLoadedImages(prev => prev + 1)}
+            onError={e => {
+              e.target.style.display = 'none';
+              setLoadedImages(prev => prev + 1);
+            }}
+          />
+        </div>
         {description && (
           <div className="modal-description">
             {description.split('\n').map((line, idx) => (
@@ -151,7 +151,6 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
       </div>
     )}
 
-    {/* ---------- THUMBS (kolejne obrazy) ---------- */}
     {modalId && totalImages > 1 && (
       <div className="modal-thumbs">
         {[...Array(totalImages - 1)].map((_, i) => (

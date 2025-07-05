@@ -1,15 +1,45 @@
-import { useEffect, useRef  , useState} from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Header({ scrollContainer }) {
   const headerRef = useRef(null);
   const scrollListenerRef = useRef(null);
+  const hamburgerRef = useRef(null); 
+
+  useEffect(() => {
+    const hamburger = hamburgerRef.current;
+    const header = headerRef.current;
+
+    if (!hamburger || !header) return;
+
+    const handleToggle = () => {
+      hamburger.classList.toggle('is-active');
+      header.classList.toggle('is-active');
+    };
+
+    hamburger.addEventListener('click', handleToggle);
+    const links = header.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', handleToggle);
+    });
+
+    return () => {
+      hamburger.removeEventListener('click', handleToggle);
+      links.forEach(link => {
+        link.removeEventListener('click', handleToggle);
+      });
+    };
+  }, []);
+
 
   useEffect(() => {
     const header = headerRef.current;
     const container = scrollContainer?.current;
 
     if (!header || !container) return;
+    if (window.innerWidth < 992) {
+      return;
+    }
 
     const pełnaWysokość = header.scrollHeight;
     header.style.maxHeight = `${pełnaWysokość}px`;
@@ -39,7 +69,8 @@ export default function Header({ scrollContainer }) {
 
   return (
     <header className="App-header">
-      <div className="header" ref={headerRef}>
+      <div className="hamburger" ref={hamburgerRef}>☰</div>
+      <div className="header" ref={headerRef}> 
         <Link to="/">Projekty</Link>
         <Link to="/o-mnie">o mnie</Link>
         <Link to="/cv">CV</Link>
