@@ -10,6 +10,18 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
   const totalImages = 10;
   const modalContentRef = useRef(null);
 
+  const [description, setDescription] = useState('');
+  useEffect(() => {
+    if (!modalId) return;
+    fetch(`/${modalId}/1.txt`)
+      .then(res => {
+        if (!res.ok) throw new Error('Brak pliku');
+        return res.text();
+      })
+      .then(txt => setDescription(txt))
+      .catch(() => setDescription(''));
+  }, [modalId]);
+
   useEffect(() => {
     if (loadedImages === totalImages) {
       if (onImagesLoaded) onImagesLoaded();
@@ -76,60 +88,93 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
             style={{ opacity: !hasScrolledProjekty  ? 1 : 0 }}
           />
         <div className="didplayflex">
-          <ProjectElement id="1" name="test" onClick={setModalId} />
-          <ProjectElement id="2" name="test2" onClick={setModalId} />
+          <ProjectElement id="1" name="Słubice Swimscape" onClick={setModalId} />
+          <ProjectElement id="2" name="Brzegi Gniezna" onClick={setModalId} />
         </div>
         <div className="didplayflex">
-          <ProjectElement id="3" name="test3" onClick={setModalId} />
-          <ProjectElement id="4" name="test4" onClick={setModalId} />
+          <ProjectElement id="3" name="Wokół Pomnika" onClick={setModalId} />
+          <ProjectElement id="4" name="Micro Living" onClick={setModalId} />
         </div>
         <div className="didplayflex">
-          <ProjectElement id="5" onClick={setModalId} />
-          <ProjectElement id="6" onClick={setModalId} />
+          <ProjectElement id="5" name="Skwer Miejski" onClick={setModalId} />
+          <ProjectElement id="6" name="Architektura Piwa" onClick={setModalId} />
         </div>
         <div className="didplayflex">
-          <ProjectElement id="7" onClick={setModalId} />
-          <ProjectElement id="8" onClick={setModalId} />
+          <ProjectElement id="7" name="Nowy Rytm Jarocina" onClick={setModalId} />
+          <ProjectElement id="8" name="Dom z widokiem" onClick={setModalId} />
         </div>
         <div className="didplayflex">
-          <ProjectElement id="9" onClick={setModalId} />
-          <ProjectElement id="10" onClick={setModalId} />
+          <ProjectElement id="9" name="Wolność i Stal" onClick={setModalId} />
+          <ProjectElement id="10" name="Krąg Dziecka" onClick={setModalId} />
         </div>
       </section>
 
       <div
-        className={`modal-overlay ${modalId ? 'show' : ''}`}
-        onClick={() => setModalId(null)}
-        style={{ pointerEvents: modalId ? 'auto' : 'none' }}
-      >
-        <div
-          className="modal-content"
-          ref={modalContentRef}
-          onClick={(e) => e.stopPropagation()}
-          style={{ overflowY: 'auto', maxHeight: '90vh' }}
-        >
-          <img
-            src="/arrow.png"
-            alt="Scroll down"
-            className="arrow-icon"
-            style={{ opacity: !hasScrolledModal && isOverflowingModal ? 1 : 0 }}
-          />
-          {modalId &&
-            [...Array(totalImages)].map((_, i) => (
-              <img
-                key={i}
-                src={`/${modalId}/${i + 1}.jpg`}
-                alt={`Projekt ${modalId} - obraz ${i + 1}`}
-                onLoad={() => setLoadedImages((prev) => prev + 1)}
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  setLoadedImages((prev) => prev + 1);
-                }}
-              />
+  className={`modal-overlay ${modalId ? 'show' : ''}`}
+  onClick={() => setModalId(null)}
+  style={{ pointerEvents: modalId ? 'auto' : 'none' }}
+>
+  <div
+    className="modal-content"
+    ref={modalContentRef}
+    onClick={e => e.stopPropagation()}
+    style={{ overflowY: 'auto', maxHeight: '90vh' }}
+  >
+    {/* strzałka */}
+    <img
+      src="/arrow.png"
+      alt="Scroll down"
+      className="arrow-icon"
+      style={{ opacity: !hasScrolledModal && isOverflowingModal ? 1 : 0 }}
+    />
+
+    {/* ---------- HERO (pierwszy obraz) ---------- */}
+    {modalId && (
+      <div className="modal-hero">
+        <img
+          src={`/${modalId}/1.png`}
+          alt={`Projekt ${modalId} – obraz 1`}
+          onLoad={() => setLoadedImages(prev => prev + 1)}
+          onError={e => {
+            e.target.style.display = 'none';
+            setLoadedImages(prev => prev + 1);
+          }}
+        />
+
+        {description && (
+          <div className="modal-description">
+            {description.split('\n').map((line, idx) => (
+              <p key={idx}>{line}</p>
             ))}
-        </div>
-        <button className="buttonX" onClick={() => setModalId(null)}> X </button>
+          </div>
+        )}
       </div>
+    )}
+
+    {/* ---------- THUMBS (kolejne obrazy) ---------- */}
+    {modalId && totalImages > 1 && (
+      <div className="modal-thumbs">
+        {[...Array(totalImages - 1)].map((_, i) => (
+          <img
+            key={i + 2}
+            src={`/${modalId}/${i + 2}.png`}
+            alt={`Projekt ${modalId} – obraz ${i + 2}`}
+            onLoad={() => setLoadedImages(prev => prev + 1)}
+            onError={e => {
+              e.target.style.display = 'none';
+              setLoadedImages(prev => prev + 1);
+            }}
+          />
+        ))}
+      </div>
+    )}
+  </div>
+
+  <button className="buttonX" onClick={() => setModalId(null)}>
+    X
+  </button>
+</div>
+
     </>
   );
 }

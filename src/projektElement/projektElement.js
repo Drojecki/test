@@ -1,5 +1,5 @@
 function ProjectElement({ id, name="projekt", onClick }) {
-  const background1 = `/${id}/1.jpg`;
+  const background1 = `/${id}/1.png`;
   const background2 = `/${id}/2.png`;
 
   return (
