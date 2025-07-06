@@ -80,9 +80,19 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
     return () => container.removeEventListener('scroll', onScroll);
   }, [hasScrolledProjekty, projektyRef]);
 
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShow(true);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <>
-      <section className="hejkanaklejka">
+    <div>
+      <section className={`hejkanaklejka ${show ? 'fade-in' : 'hidden'}`}>
         <div className="col-12 col-lg-6">
           <div className="testest">
             <h1 className="duzynapis">PORTFOLIO</h1>
@@ -94,7 +104,7 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
         </div>
       </section>
 
-      <section className="projekty" ref={projektyRef} style={{ overflowY: 'auto', maxHeight: '80vh' }}>
+      <section className={`projekty ${show ? 'fade-in' : 'hidden'}`} ref={projektyRef}>
           <img
             src="/arrow.png"
             alt="Scroll down"
@@ -188,6 +198,6 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
           X
         </button>
       </div>
-    </>
+    </div>
   );
 }

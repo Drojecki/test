@@ -67,14 +67,15 @@ export default function Header({ scrollContainer }) {
     };
   }, [scrollContainer?.current]);
 
+
   return (
     <header className="App-header">
       <div className="hamburger" ref={hamburgerRef}>☰</div>
       <div className="header" ref={headerRef}> 
-        <Link to="/">Projekty</Link>
-        <Link to="/o-mnie">o mnie</Link>
-        <Link to="/cv">CV</Link>
-        <Link to="/kontakt" className="text-header">Kontakt</Link>
+        <Link to="/" className='projekty-header'>Projekty</Link>
+        <Link to="/o-mnie"className='o-mine'>o mnie</Link>
+        <Link to="/cv"className='cv'>CV</Link>
+        <Link to="/kontakt" className="text-header kontakt">Kontakt</Link>
       </div>
     </header>
   );

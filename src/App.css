@@ -66,7 +66,7 @@ body::before {
      }
 }
 .header{
-  background-color: rgba(240, 248, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
   display: flex;
   gap: 50px;
   justify-content: right;
@@ -177,7 +177,11 @@ a:hover::after {
   opacity: 1;
   scrollbar-width: none;
   -ms-overflow-style: none; 
-   
+  overflow-y: auto;
+  max-height: 80vh;
+  @media (max-width:991px) {
+    max-height: 65vh;
+  }
 }
 
 .projekty::-webkit-scrollbar {
@@ -595,6 +599,15 @@ a:hover::after {
   text-transform: capitalize;
   margin: 10px;
 }
+.hidden {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
 
 
 
