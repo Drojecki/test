@@ -482,7 +482,18 @@ a:hover::after {
   line-height: 20px;
 }
 .modal-description p{
+  text-shadow: 5px 6px 10px rgba(0, 0, 0, 0.5);
+  line-height: 22px;
   margin: 0px;
+  width: 90%;
+  justify-content: center;
+  justify-self: center;
+}
+.modal-description p:first-of-type{
+  margin-bottom: 20px;
+  font-weight: 400;
+  font-size: 23px;
+  text-align: center;
 }
 .modal-thumbs{
   display: flex;
@@ -517,7 +528,7 @@ a:hover::after {
     max-width: unset;
     width: calc(100vw - 20px);
     top: 10px;
-    height: calc(100dvh - 70px);
+    height: calc(100dvh - 20px);
   }
 }
 
@@ -598,6 +609,7 @@ a:hover::after {
   font-weight: 300;
   text-transform: capitalize;
   margin: 10px;
+  
 }
 .hidden {
   opacity: 0;
