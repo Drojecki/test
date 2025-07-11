@@ -417,6 +417,7 @@ a:hover::after {
   display: flex;
 }
 .coslol{
+  width: 100%;
   @media (max-width:991px) {
      display: block;
   }
