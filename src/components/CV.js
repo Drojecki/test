@@ -12,15 +12,26 @@ export default function CV() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    document.body.classList.add("no-bg");
+    return () => {
+      document.body.classList.remove("no-bg");
+    };
+  }, []);
+
+
   return (
-    <section className={`hejkanaklejka ${show ? 'fade-in' : 'hidden'}`}>
-      <div className="col-12 col-lg-6">
-        <div className="testest">
-          <h1 className="duzynapis">CV</h1>
-          <p className="textpod margin">Moje CV</p>
+    <>
+      <section className={`hejkanaklejka cvmargin ${show ? 'fade-in' : 'hidden'}`}>
+        <a className='download' href="/Emilia_czopik.pdf" download>Pobierz <img className='downloadIcon' src='/download.png'/></a>
+        <div className="col-12">
+          <div className="testest CVpage">
+            <img className='imgCV' src="/Emilia_czopik.png"/>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
+    
   );
   ;
 }
