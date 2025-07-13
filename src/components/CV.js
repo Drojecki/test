@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import "../assets/css/CV.css"
 export default function CV() {
 
   const [show, setShow] = useState(false);
@@ -23,7 +23,7 @@ export default function CV() {
   return (
     <>
       <section className={`hejkanaklejka cvmargin ${show ? 'fade-in' : 'hidden'}`}>
-        <a className='download' href="/Emilia_czopik.pdf" download>Pobierz <img className='downloadIcon' src='/download.png'/></a>
+        <a className='download' href="/Emilia_czopik.pdf" download>Pobierz PDF <img className='downloadIcon' src='/download.png'/></a>
         <div className="col-12">
           <div className="testest CVpage">
             <div className='cvBlock'>
@@ -32,13 +32,12 @@ export default function CV() {
                   <p className='cv-text'>curriculum vitae</p>
                   <p className='cv-p'>EMILIA CZOPIK</p>
                   <div className='kontaktitel'>
-                    <img className='imgkontakcik' src='./cvZdjecie.jpg'/>
+                    <img className='imgkontakcik' src='/cvZdjecie.jpg'/>
                     <div className='kontakcik'>
-                      {/* <p className='kontakciktralala data-ur'>Data urodzenia: 13.09.2002 r.</p> */}
                       <p className='kontakciktralala a4321 hahxd'>KONTAKT</p>
-                        <p className='kontakciktralala a123'>+48 799 099 321</p>
-                        <p className='kontakciktralala a123'>emilia.czopik@op.pl</p>
-                        <p className='kontakciktralala a123'>Poznań</p>
+                        <a href="tel:+48 799 099 321" className='kontakciktralala a123'><img src='/CV/phone-call.png' className='ikonki'/>+48 799 099 321</a>
+                        <a href="mailto:emilia.czopik@op.pl" className='kontakciktralala a123'><img src='/CV/email.png' className='ikonki'/>emilia.czopik@op.pl</a>
+                        <p className='kontakciktralala a123'><img src='/CV/location.png' className='ikonki'/>Poznań</p>
                     </div>
                   </div>
                   <p >O MNIE</p>
@@ -66,7 +65,7 @@ export default function CV() {
                     <div className='row-1'>
                       <p className='row-1-p'>Kompetencje cyfrowe</p>   
                     </div>
-                    <div className='flex'>
+                    <div className='flex justifybetween'>
                       <ol>
                         <li>AutoCAD</li>
                         <li>ArchiCAD</li>
@@ -96,8 +95,35 @@ export default function CV() {
                       </ol>
                   </div> 
                 </div>
-                <div className='flex'>
-
+                <div className='flex coslol'>
+                  <div className='row-szary-4'>
+                    <div className='row-1'>
+                      <p className='row-1-p'>EDUKACJA</p>   
+                    </div>
+                    <p className='edukacja zlikniem'>10.2022 - obecnie</p>
+                    <p className='edukacja'>Politechnika Poznańska, Wydział Architektury</p>
+                    <p className='edukacja'>Kierunek: Architektura, Rok IV</p>
+                    <p className='edukacja zlikniem'>09.2018 - 09.2021</p>
+                    <p className='edukacja'>Liceum Ogólnokształcące im. Tadeusza Kościuszki w Jarocinie</p>
+                    <p className='edukacja'>Profil: matematyczno-fizyczny</p>
+                    <p className='edukacja zlikniem' >09.2015 - 05.2021</p>
+                    <p className='edukacja'>Niepubliczne Gimnazjum im. Tadeusza Kościuszki w Jarocinie</p>
+                  </div> 
+                  <div className='row-szary-5'>
+                    <div className='row-1'>
+                      <p className='row-1-p'>ZAINTERESOWANIA</p>   
+                    </div>
+                    <div className='flex'>
+                      <ol>
+                        <li>Członek Koła “Illumination” - projektowanie mody inspirowanej architekturą, łączące formy przestrzenne z odzieżą (udział jako projektantka w wystawie “Architektura z bioniką” z autorską pracą opartą na zasadach biomimetyki i designu).</li>
+                        <li>Członek Koła Naukowego Historycznego – prowadzenie badań nad ochroną dziedzictwa dawnego klasztoru Bożogrobców w Gnieźnie</li>
+                        <li>Członek IAESTE Poland – aktywne wspieranie międzynarodowych praktyk technicznych i wymiany doświadczeń dla studentów architektury.</li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+                <div className='blok'>
+                  testsetses
                 </div>
               </div>
             </div>

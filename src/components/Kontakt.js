@@ -10,14 +10,24 @@ export default function Kontakt() {
 
     return () => clearTimeout(timer);
   }, []);
+  
 
   return (
-    <section className={`hejkanaklejka ${show ? 'fade-in' : 'hidden'}`}>
-      <div className="col-12 col-lg-6">
-        <div className="testest">
-          <h1 className="duzynapis">Kontakt</h1>
-          <p className="textpod margin">Kontakt do Mnie</p>
+    <section className={`ha ${show ? 'fade-in' : 'hidden'}`}>
+      <div className="col-12">
+        <div className="testest uj">
+           <div className='margin-auto'>
+            <div className='hulajka'>
+              <h1 className="duzynapis ys">Kontakt</h1>
+              <div className='kontakcik niee'>
+                  <a href="tel:+48 799 099 321" className='kontakciktralala nowe'><img src='/CV/phone-call.png' className='ikonki1'/>+48 799 099 321</a>
+                  <a href="mailto:emilia.czopik@op.pl" className='kontakciktralala nowe'><img src='/CV/email.png' className='ikonki1'/>emilia.czopik@op.pl</a>
+                  <p className='kontakciktralala nowe'><img src='/CV/location.png' className='ikonki1'/>Poznań</p>
+              </div>
+            </div>
+          </div>
         </div>
+       
       </div>
     </section>
   );

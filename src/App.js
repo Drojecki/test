@@ -28,6 +28,22 @@ function AppContent() {
       setLoading(false);
     }
   }, [location.pathname]);
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/Async.css';
+    link.media = 'print';
+    link.onload = () => {
+      link.media = 'all';
+    };
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
+
+
 
   return (
     <>

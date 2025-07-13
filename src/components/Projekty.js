@@ -1,6 +1,8 @@
 import ProjectElement from '../projektElement/projektElement.js';
 import { useEffect, useRef, useState } from 'react';
 import LazyThumbImage from '../components/LazyThumbImage';
+import LightGallery from 'lightgallery/react';
+import lgZoom from 'lightgallery/plugins/zoom';
 
 export default function Projekty({ projektyRef , onImagesLoaded }) {
   const [modalId, setModalId] = useState(null);
@@ -8,8 +10,23 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
   const [hasScrolledModal, setHasScrolledModal] = useState(false);
   const [isOverflowingModal, setIsOverflowingModal] = useState(false);
   const [loadedImages, setLoadedImages] = useState(0);
-  const totalImages = 10;
   const modalContentRef = useRef(null);
+
+  const projectImagesCount = {
+    "1": 13,
+    "2": 6,
+    "3": 10,
+    "4": 6,
+    "5": 11,
+    "6": 15,
+    "7": 4,
+    "8": 7,
+    "9": 5,
+    "10": 0
+  };
+
+  const totalImages = modalId ? projectImagesCount[modalId] || 0 : 0;
+
   const projectNames = {
     "1": "Słubice Swimscape",
     "2": "Brzegi Gniezna",
@@ -22,7 +39,6 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
     "9": "Wolność i Stal",
     "10": "Krąg Dziecka"
   };
-
 
   const [description, setDescription] = useState('');
   useEffect(() => {
@@ -40,7 +56,7 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
     if (loadedImages === totalImages) {
       if (onImagesLoaded) onImagesLoaded();
     }
-  }, [loadedImages, onImagesLoaded]);
+  }, [loadedImages, onImagesLoaded, totalImages]);
 
   useEffect(() => {
     const modalContent = modalContentRef.current;
@@ -57,7 +73,7 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
     }
 
     return () => modalContent.removeEventListener('scroll', handleScroll);
-  }, [modalId, loadedImages]);
+  }, [modalId, loadedImages, totalImages]);
 
   useEffect(() => {
     if (modalId) {
@@ -94,30 +110,32 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
     <div>
       <section className={`hejkanaklejka ${show ? 'fade-in' : 'hidden'}`}>
         <div className="col-12 col-lg-6">
-          <div className="testest">
-            <h1 className="duzynapis">PORTFOLIO</h1>
-            <p className="imie">Emilia Czopik</p>
-            <p className="textpod">Projektuję przestrzenie, które zostają na dłużej.</p>
-            <p className="textpod">Zarówno wewnątrz, jak i na zewnątrz.</p>
-            <p className="textpod margin">Architektura • Wnętrza • Przestrzeń publiczna</p>
+          <div className="testest nomargin">
+            <div className='margin50'>
+              <h1 className="duzynapis">PORTFOLIO</h1>
+              <p className="imie">Emilia Czopik</p>
+              <p className="textpod">Projektuję przestrzenie, które zostają na dłużej.</p>
+              <p className="textpod">Zarówno wewnątrz, jak i na zewnątrz.</p>
+              <p className="textpod margin">Architektura • Wnętrza • Przestrzeń publiczna</p>
+            </div>
           </div>
         </div>
       </section>
 
       <section className={`projekty ${show ? 'fade-in' : 'hidden'}`} ref={projektyRef}>
-          <img
-            src="/arrow.png"
-            alt="Scroll down"
-            className="scroll-arrow"
-            style={{ opacity: !hasScrolledProjekty  ? 1 : 0 }}
-          />
+        <img
+          src="/arrow.png"
+          alt="Scroll down"
+          className="scroll-arrow"
+          style={{ opacity: !hasScrolledProjekty ? 1 : 0 }}
+        />
         <div className="didplayflex">
           <ProjectElement id="1" name="Słubice Swimscape" onClick={setModalId} />
           <ProjectElement id="2" name="Brzegi Gniezna" onClick={setModalId} />
         </div>
         <div className="didplayflex">
           <ProjectElement id="3" name="Plac Berwińskiego" onClick={setModalId} />
-          <ProjectElement id="4" name="Micro Living" onClick={setModalId} />
+          <ProjectElement id="4" name="Tarasy nad Wierzbakiem" onClick={setModalId} />
         </div>
         <div className="didplayflex">
           <ProjectElement id="5" name="Skwer Miejski" onClick={setModalId} />
@@ -144,7 +162,6 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
           onClick={e => e.stopPropagation()}
           style={{ overflowY: 'auto'}}
         >
-        
           <img
             src="/arrow.png"
             alt="Scroll down"
@@ -155,41 +172,50 @@ export default function Projekty({ projektyRef , onImagesLoaded }) {
           {modalId && (
             <div className="modal-hero">
               <h1 className='projektHeader'>{projectNames[modalId]}</h1>
-              <div className='divimgtest'>
-                <LazyThumbImage
-                  src={`/${modalId}/1.png`}
-                  alt={`Projekt ${modalId} – obraz 1`}
-                  onLoad={() => setLoadedImages(prev => prev + 1)}
-                  onError={e => {
-                    e.target.style.display = 'none';
-                    setLoadedImages(prev => prev + 1);
-                  }}
-                />
-              </div>
-              {description && (
-                <div className="modal-description">
-                  {description.split('\n').map((line, idx) => (
-                    <p key={idx}>{line}</p>
-                  ))}
+              <LightGallery
+                plugins={[lgZoom]}
+                speed={500}
+                selector=".lightgallery-item"
+              >
+                <div className='divimgtest'>
+                  <LazyThumbImage
+                    src={`/${modalId}/1.png`}
+                    alt={`Projekt ${modalId} – obraz 1`}
+                    className={`first-thumb lightgallery-item`}
+                    onLoad={() => setLoadedImages(prev => prev + 1)}
+                    onError={e => {
+                      e.target.style.display = 'none';
+                      setLoadedImages(prev => prev + 1);
+                    }}
+                    forceLargest={true}
+                  />
                 </div>
-              )}
-            </div>
-          )}
+                {description && (
+                  <div className="modal-description">
+                    {description.split('\n').map((line, idx) => (
+                      <p key={idx}>{line}</p>
+                    ))}
+                  </div>
+                )}
 
-          {modalId && totalImages > 1 && (
-            <div className="modal-thumbs">
-              {[...Array(totalImages - 1)].map((_, i) => (
-              <LazyThumbImage
-                  key={i + 2}
-                  src={`/${modalId}/${i + 2}.png`}
-                  alt={`Projekt ${modalId} – obraz ${i + 2}`}
-                  onLoad={() => setLoadedImages(prev => prev + 1)}
-                  onError={e => {
-                    e.target.style.display = 'none';
-                    setLoadedImages(prev => prev + 1);
-                  }}
-                />
-              ))}
+                {totalImages > 1 && (
+                  <div className="modal-thumbs">
+                    {[...Array(totalImages - 1)].map((_, i) => (
+                      <LazyThumbImage
+                        key={i + 2}
+                        src={`/${modalId}/${i + 2}.png`}
+                        alt={`Projekt ${modalId} – obraz ${i + 2}`}
+                        className="lightgallery-item"
+                        onLoad={() => setLoadedImages(prev => prev + 1)}
+                        onError={e => {
+                          e.target.style.display = 'none';
+                          setLoadedImages(prev => prev + 1);
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
+              </LightGallery>
             </div>
           )}
         </div>
